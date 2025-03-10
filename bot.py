@@ -40,47 +40,30 @@ async def help_command(update: Update, context: CallbackContext) -> None:
     /approve_raider <user_id> - Approve a raider
 
     """
-    await send_message(update, help_text)
-async def create_team_command(update: Update, context: CallbackContext):
-    if not context.args:
-        await send_message(update, "Usage: /create_team <team_name>")
-        return
-    
-    team_name = " ".join(context.args)  # Capture team name from command args
-    leader_id = update.effective_user.id  # Get the Telegram user ID
-
-    result = create_team(team_name, leader_id)  # Call function with both arguments
-    await send_message(update, result)  # Send response message
-
-async def start(update, context):
-    keyboard = [
-        [InlineKeyboardButton("➕ ADD ME TO CHAT", url=f"https://t.me/{context.bot.username}?startgroup=true")],
-        [InlineKeyboardButton("⚙ CONTINUE SETUP HERE", callback_data="help_command")]
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
+    async def start(update, context):
+     keyboard = [
+         [InlineKeyboardButton("➕ ADD ME TO CHAT", url=f"https://t.me/{context.bot.username}?startgroup=true")],
+         [InlineKeyboardButton("⚙ CONTINUE SETUP HERE", callback_data="continue_setup")]
+     ]
+     reply_markup = InlineKeyboardMarkup(keyboard)
+ 
      await update.message.reply_text(
-        "👋 Welcome to the Raid Team Bot!\n\n"
-        "Click one of the options below to get started:",
-        reply_markup=reply_markup
-    )
-
-async def button_callback(update: Update, context: CallbackContext):
-    query = update.callback_query
-    await query.answer()
-
-    if query.data == "help_command":
-        await query.message.reply_text("ℹ️ This bot helps manage raid teams. Use /start to begin.")
-
-async def help_command(update: Update, context: CallbackContext):
-    await update.message.reply_text("ℹ️ This bot helps manage raid teams. Use /start to begin.")
-
-
-# Ensure these handlers are properly registered in your existing dispatcher
-application.add_handler(CommandHandler("start", start))
-application.add_handler(CommandHandler("help", help_command))
-application.add_handler(CallbackQueryHandler(button_callback))
-
+         "👋 Welcome to the Raid Team Bot!\n\n"
+         "Click one of the options below to get started:",
+         reply_markup=reply_markup
+     )
+ 
+ async def button_callback(update, context):
+     query = update.callback_query
+     await query.answer()
+ 
+     if query.data == "continue_setup":
+         await query.message.reply_text("Let's continue the setup. What do you want to do next?")
+ 
+ # Ensure these handlers are properly registered in your existing dispatcher
+ application.add_handler(CommandHandler("start", start))
+ application.add_handler(CallbackQueryHandler(button_callback))
+ 
 
 async def list_pending_raiders_command(update: Update, context: CallbackContext):
     user_id = update.effective_user.id
