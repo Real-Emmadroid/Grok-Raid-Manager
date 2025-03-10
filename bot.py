@@ -55,25 +55,30 @@ async def create_team_command(update: Update, context: CallbackContext):
 async def start(update, context):
     keyboard = [
         [InlineKeyboardButton("➕ ADD ME TO CHAT", url=f"https://t.me/{context.bot.username}?startgroup=true")],
-        [InlineKeyboardButton("⚙ CONTINUE SETUP HERE", callback_data="continue_setup")]
+        [InlineKeyboardButton("⚙ CONTINUE SETUP HERE", callback_data="help_command")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text(
+     await update.message.reply_text(
         "👋 Welcome to the Raid Team Bot!\n\n"
         "Click one of the options below to get started:",
         reply_markup=reply_markup
     )
 
-async def button_callback(update, context):
+async def button_callback(update: Update, context: CallbackContext):
     query = update.callback_query
     await query.answer()
 
-    if query.data == "continue_setup":
-        await query.message.reply_text("Let's continue the setup. What do you want to do next?")
+    if query.data == "help_command":
+        await query.message.reply_text("ℹ️ This bot helps manage raid teams. Use /start to begin.")
+
+async def help_command(update: Update, context: CallbackContext):
+    await update.message.reply_text("ℹ️ This bot helps manage raid teams. Use /start to begin.")
+
 
 # Ensure these handlers are properly registered in your existing dispatcher
 application.add_handler(CommandHandler("start", start))
+application.add_handler(CommandHandler("help", help_command))
 application.add_handler(CallbackQueryHandler(button_callback))
 
 
