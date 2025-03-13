@@ -384,9 +384,10 @@ async def sp_command(update: Update, context: CallbackContext) -> None:
 
     # Format message
     message = (
-        f"🟥🟥 {project_name} 🟥🟥\n"
-            f"LEADS\n{leads}\n\n"
-            f"RAIDERS\n{raiders}\n\n"
+        f"🟥🟥 {project_name} 🟥🟥\n\n"
+        f"LEADS\n{"\n".join(leads) if leads else 'No leads assigned'}\n\n"
+        f"RAIDERS\n{"\n".join(raiders) if raiders else 'No raiders assigned'}\n\n"
+        f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     )
     await send_message(update, message)
 
