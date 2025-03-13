@@ -261,6 +261,12 @@ async def auto_pick(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     
     await update.message.reply_text(response)
+    
+# Error handler
+async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logger.error(f"Update: {update}\nError: {context.error}", exc_info=True)
+    if update and update.message:
+        await update.message.reply_text(f"⚠️ Error: {str(context.error)}")
 
 # Main Function
 def main():
