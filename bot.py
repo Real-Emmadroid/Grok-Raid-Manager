@@ -383,12 +383,15 @@ async def sp_command(update: Update, context: CallbackContext) -> None:
     raiders = project[1].split('\n') if project[1] else []
 
     # Format message
-    message = (
-        f"🟥🟥 {project_name} 🟥🟥\n\n"
-        f"LEADS\n{"\n".join(leads) if leads else 'No leads assigned'}\n\n"
-        f"RAIDERS\n{"\n".join(raiders) if raiders else 'No raiders assigned'}\n\n"
-        f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-    )
+leads_list = '\n'.join(leads) if leads else 'No leads assigned 🌟'
+raiders_list = '\n'.join(raiders) if raiders else 'No raiders assigned 🌟'
+
+message = (
+    f"🟥🟥 {project_name} 🟥🟥\n\n"
+    f"✨ LEADS ✨\n{leads_list}\n\n"
+    f"🔥 RAIDERS 🔥\n{raiders_list}\n\n"
+    f"🕒 Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+)
     await send_message(update, message)
 
 # Command Handlers
