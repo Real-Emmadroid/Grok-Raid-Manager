@@ -92,13 +92,13 @@ async def handle_project_list(update: Update, context: CallbackContext):
     save_project(chat_id, project_name, leads, raiders)
 
     # Format the output message
-    formatted_message = (
-        f"/CP {project_name}\n\n"
-        f"LEADS\n"
-        f"{'\n'.join(leads)}\n\n"
-        f"RAIDERS\n"
-        f"{'\n'.join(raiders)}"
-    )
+formatted_message = (
+    f"/CP {project_name}\n\n"
+    f"LEADS\n"
+    f"{'\n'.join(leads)}\n\n"
+    f"RAIDERS\n"
+    f"{'\n'.join(raiders)}"
+)
 
     # Repost the message and get the Message object
     sent_message = await send_message(update, formatted_message)
