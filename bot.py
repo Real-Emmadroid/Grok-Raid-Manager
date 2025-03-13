@@ -389,7 +389,6 @@ async def sp_command(update: Update, context: CallbackContext) -> None:
         f"RAIDERS\n{'\n'.join(raiders) if raiders else 'No raiders assigned'}\n\n"
         f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     )
-    
     await send_message(update, message)
 
 # Command Handlers
