@@ -77,6 +77,50 @@ async def handle_project_list(update: Update, context: CallbackContext):
     sent_message = await send_message(update, formatted_message)
     await context.bot.pin_chat_message(chat_id, sent_message.message_id)
 
+# Command Handlers
+async def start(update: Update, context: CallbackContext) -> None:
+    # Create a single button for "ADD ME TO CHAT"
+    keyboard = [
+        [InlineKeyboardButton("➕ ADD ME TO YOUR RAID GROUP", url=f"https://t.me/{context.bot.username}?startgroup=true")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    # Send the welcome message with the button
+    await send_message(
+        update,
+        "👋 Hey there! I am GROK, the ultimate tool for shill raiding management.\n\n"
+        "I’m here to help you:\n"
+        "🔸 Create and manage raid teams\n"
+        "🔸 Verify and approve raiders\n"
+        "🔸 Track engagement and leaderboard rankings\n"
+        "🔸 Manage projects and assign LEADS\n"
+        "🔸 Swap raiders seamlessly\n\n"
+        "Click the /help command to get started! 🚀",
+        reply_markup=reply_markup
+    )
+
+async def help_command(update_or_query, context: CallbackContext) -> None:
+    help_text = """
+    Available Commands:
+    /create_team <team_name> - Create a new team
+    /list_teams - View all teams
+    /view_team <team_name> - View members of a team
+    /CP - Create a project
+    /swap - Swap raiders IN AND OUT of projects
+    /remove_team <team_name> - Remove a team (only leader can do this)
+    /leave_team <team_name> - Leave a team
+    /remove_inactive - Remove inactive members
+    /leaderboard - View the leaderboard
+    /verify_team <team_name> - Verify a team
+    /register_raider <team_name> <username> - Register a raider
+    """
+    # Check if the input is a query or an update
+    if hasattr(update_or_query, "message"):
+        await update_or_query.message.reply_text(help_text)
+    else:
+        await update_or_query.edit_message_text(help_text)  # For callback queries
+
+
 # View projects in the group
 async def view_project_command(update: Update, context: CallbackContext) -> None:
     chat_id = update.message.chat_id
