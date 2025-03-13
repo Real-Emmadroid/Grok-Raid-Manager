@@ -386,12 +386,13 @@ async def sp_command(update: Update, context: CallbackContext) -> None:
 leads_list = '\n'.join(leads) if leads else 'No leads assigned 🌟'
 raiders_list = '\n'.join(raiders) if raiders else 'No raiders assigned 🌟'
 
-message = (
+    message = (
     f"🟥🟥 {project_name} 🟥🟥\n\n"
     f"✨ LEADS ✨\n{leads_list}\n\n"
     f"🔥 RAIDERS 🔥\n{raiders_list}\n\n"
     f"🕒 Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-)
+    )
+
     await send_message(update, message)
 
 # Command Handlers
