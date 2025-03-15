@@ -774,11 +774,11 @@ async def view_project_command(update: Update, context: CallbackContext) -> None
                 balance = get_project_balance(raider.strip(), project_name)
                 raiders_list.append(f"{raider.strip()} [₦ {balance}]")
 
-        projects_message += (
-            f"🟥🟥 {project_name} 🟥🟥\n"
-            f"LEADS\n{'\n'.join(leads_list) or 'No leads assigned'}\n\n"
-            f"RAIDERS\n{'\n'.join(raiders_list) or 'No raiders assigned'}\n\n"
-        )
+        f"🟥🟥 {project_name} 🟥🟥\n\n"
+        f"LEADS\n{leads}\n\n"
+        f"RAIDERS\n{raiders}\n\n"
+        f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    )
 
     await send_message(update, projects_message)   
 
